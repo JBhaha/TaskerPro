@@ -18,37 +18,6 @@ class _TaskListPageState extends State<TaskListPage> {
   late ShakeDetector detector;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  void navigateToOtherPage() {
-    // Use Flutter's navigation system to navigate to a different page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddTaskPage()),
-    );
-  }
-
-  /*@override
-  void didUpdateWidget(TaskListPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Check if the widget is updated (navigated back)
-    if (widget != oldWidget) {
-      // Re-enable shake detection
-      setState(() {
-        _isShakeEnabled = true;
-      });
-    }
-  }*/
-
-  @override
-  void dispose() {
-    // Dispose the shake detector
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var tasks = Provider.of<TaskList>(context);
 
@@ -158,8 +127,10 @@ class _TaskListPageState extends State<TaskListPage> {
 
   void setTasksToDone(BuildContext context) {
     var tasks = Provider.of<TaskList>(context, listen: false);
-    for (var i = 0; i <= tasks.getTodoList().length; i++) {
-      tasks.getTaskList()[i].markAsDone();
+    for (var element in tasks.getTaskList()) {
+      if (element.isDone == false) {
+        element.markAsDone();
+      }
     }
     redrawPage();
   }
